@@ -22,11 +22,11 @@ public class ChatHandler extends TextWebSocketHandler {
 		
 	}
 	
-	@Override
 	public void handlerTextMessage(WebSocketSession session, TextMessage msg) throws Exception {
 		
 		String payload = msg.getPayload();
 		ChatMessage cmsg = mapper.readValue(payload, ChatMessage.class);
+		
 		
 	}
 }
