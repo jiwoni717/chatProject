@@ -1,43 +1,32 @@
 package com.cp.main;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.*;
 import org.springframework.stereotype.Component;
-import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-import lombok.extern.log4j.Log4j;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
+@RequiredArgsConstructor
 @Component
-@Log4j
 public class ChatHandler extends TextWebSocketHandler {
 	
-	private static List<WebSocketSession> list = new ArrayList<WebSocketSession>();
+	private final ObjectMapper mapper;
+	private final ChatService service;
 	
-	@Override
-	protected void handleTextMessage(WebSocketSession session, TextMessage msg) throws Exception {
-		
-		// 전송되는 데이터
-		String pl = msg.getPayload();
-		log.info("payload : "+pl);
-		
-		for(WebSocketSession sess : list) {
-			sess.sendMessage(msg);
-		}
-	}
-	
-	// 리스트에 웹소켓 세션들을 저장해 메세지를 각 세션에 뿌려주는 handling
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		list.add(session);
-		log.info(session + "클라이언트 접속");
+		
 	}
 	
 	@Override
-	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		log.info(session + "클라이언트 접속 해제");
-		list.remove(session);
+	public void handlerTextMessage(WebSocketSession session, TextMessage msg) throws Exception {
+		
+		String payload = msg.getPayload();
+		ChatMessage cmsg = mapper.readValue(payload, ChatMessage.class);
+		
 	}
 }
