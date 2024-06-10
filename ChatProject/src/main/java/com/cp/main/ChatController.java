@@ -16,7 +16,7 @@ public class ChatController {
 
 	private final ChatService service;
 	
-	@RequestMapping("/chat/chatList")
+	@RequestMapping("chat/chatList.do")
 	public String chatList(Model model) {
 		List<ChatRoom> list = service.findAllRoom();
 		
@@ -25,7 +25,7 @@ public class ChatController {
 	}
 	
 	// 방 만들기
-	@PostMapping("chat/createRoom")
+	@PostMapping("chat/createRoom.do")
 	public String createRoom(Model model, @RequestParam String name, String username) {
 		ChatRoom room = service.createRoom(name);
 		model.addAttribute("room", room);
@@ -33,7 +33,7 @@ public class ChatController {
 		return "chat/chatRoom";
 	}
 	
-	@GetMapping("/chat/chatRoom")
+	@GetMapping("chat/chatRoom.do")
 	public String chatRoom(Model model, @RequestParam String roomId) {
 		ChatRoom room = service.findRoomById(roomId);
 		model.addAttribute("room", room);

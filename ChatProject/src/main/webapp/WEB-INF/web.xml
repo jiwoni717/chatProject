@@ -7,12 +7,12 @@
 		<servlet-name>dispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		
-		<!-- XML로 했을 때 -->	
+		<!-- XML로 했을 때 -->
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>/WEB-INF/config/application-*.xml</param-value>
 		</init-param> 
-
+		
 		<!-- 자바로 했을 때(Spring5) → 보안이 뛰어남
 		<init-param>
 			<param-name>contextClass</param-name>
